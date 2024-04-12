@@ -13,8 +13,10 @@ class FAB_API APlayerCharacter : public AFabCharacterBase
 
 public:
 	APlayerCharacter();
-	virtual void Tick(float DeltaSeconds) override;
+	virtual void PossessedBy(AController* NewController) override;
+	virtual void OnRep_PlayerState() override;
 
-protected:
-	virtual void BeginPlay() override;
+private:
+	void InitAbilitySystemComponent();
+	void InitHUD() const;
 };

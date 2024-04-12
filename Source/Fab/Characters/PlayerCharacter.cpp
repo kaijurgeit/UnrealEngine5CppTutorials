@@ -2,8 +2,10 @@
 
 
 #include "PlayerCharacter.h"
-
-#include "FabMacros.h"
+#include "AbilitySystem/FabAbilitySystemComponent.h"
+#include "AbilitySystem/FabAttributeSet.h"
+#include "Player/FabPlayerState.h"
+#include "UI/FabHUD.h"
 
 
 APlayerCharacter::APlayerCharacter()
@@ -11,22 +13,42 @@ APlayerCharacter::APlayerCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-void APlayerCharacter::Tick(float DeltaSeconds)
+void APlayerCharacter::PossessedBy(AController* NewController)
 {
-	Super::Tick(DeltaSeconds);
-	SPHERE_TICK(GetActorLocation());
-	LINE_TICK(GetActorLocation(), FVector(2200.f, 700.f, 150.f));
+	Super::PossessedBy(NewController);
+	
+	InitAbilitySystemComponent();
+	GiveDefaultAbilities();
+	InitDefaultAttributes();
+	InitHUD();
 }
 
-void APlayerCharacter::BeginPlay()
+void APlayerCharacter::OnRep_PlayerState()
 {
-	Super::BeginPlay();
-
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *FString(__FUNCTION__));
-	UE_LOG(LogTemp, Warning, TEXT("PrimaryActorTick.bCanEverTick = %s"), PrimaryActorTick.bCanEverTick ? TEXT("true") : TEXT("false"));
-	PRINT("Hello, %s", *FString(__FUNCTION__));
-	FVector TargetLocation(2200.f, 700.f, 150.f);
-	SPHERE(TargetLocation);
-	LINE(GetActorLocation(), TargetLocation);
+	Super::OnRep_PlayerState();
+	
+	InitAbilitySystemComponent();
+	InitDefaultAttributes();
+	InitHUD();
 }
 
+void APlayerCharacter::InitAbilitySystemComponent()
+{
+	AFabPlayerState* FabPlayerState = GetPlayerState<AFabPlayerState>();
+	check(FabPlayerState);
+	AbilitySystemComponent =  CastChecked<UFabAbilitySystemComponent>(
+		FabPlayerState->GetAbilitySystemComponent());
+	AbilitySystemComponent->InitAbilityActorInfo(FabPlayerState, this);
+	AttributeSet = FabPlayerState->GetAttributeSet();
+}
+
+void APlayerCharacter::InitHUD() const
+{
+	if(const APlayerController* PlayerController = Cast<APlayerController>(GetController()))
+	{
+		if(AFabHUD* FabHUD = Cast<AFabHUD>(PlayerController->GetHUD()))
+		{
+			FabHUD->Init();
+		}
+	}
+}

@@ -23,9 +23,11 @@ Fab is a co-op third-person RPG which aims at teaching gameplay programming, bei
 
 
 ## Links to each Video and Commit
+#### 4. Unreal Engine 5 C++ | Gameplay Ability System - Step by Step
+[Video](https://youtu.be/L-3ifQRpyB4) | [main](https://github.com/kaijurgeit/UnrealEngine5CppTutorials/commit/main)
 
 #### 3. Unreal Engine 5 C++ | Git (LFS) and GitHub - Command Line and Rider
-[Video](https://youtu.be/jcAwTc_QyWc) | [main](https://github.com/kaijurgeit/UnrealEngine5CppTutorials/commit/main)
+[Video](https://youtu.be/jcAwTc_QyWc) | [0d044df](https://github.com/kaijurgeit/UnrealEngine5CppTutorials/commit/0d044df3e8b52e4d5f073543c5884d95e1a4ae68)
 
 #### 2. Unreal Engine 5 C++ | Coding and Debugging with Rider
 [Video](https://youtu.be/IT9ihIc9KyI) | [4c61ae8](https://github.com/kaijurgeit/UnrealEngine5CppTutorials/commit/4c61ae89e4b4c2c0ef8a221ed774dee8fef20416)
